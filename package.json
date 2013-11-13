@@ -1,0 +1,22 @@
+{
+  "name": "schema-conformer",
+  "version": "0.0.0",
+  "description": "Fix your JSON for uploading into BigQuery",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sgentle/schema-conformer"
+  },
+  "bin": "bin/bin.js",
+  "author": "Sam Gentle <sam@samgentle.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "f361498b0632802439284f5f01706bf9d09d5a45",
+  "dependencies": {
+    "coffee-script": "~1.6.3",
+    "mocha": "~1.14.0"
+  }
+}
