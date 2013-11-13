@@ -1,6 +1,6 @@
 {
   "name": "schema-conformer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fix your JSON for uploading into BigQuery",
   "main": "index.js",
   "scripts": {
