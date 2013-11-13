@@ -53,6 +53,8 @@ And then emitting the resulting JSON string
 
           @push JSON.stringify(obj)+'\n', 'utf8'
 
+        callback()
+
 Transforms
 ----------
 
