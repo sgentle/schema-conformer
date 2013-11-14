@@ -4,7 +4,10 @@ assert = require 'assert'
 test = ({schema, input, output}) ->
   conformer = new Conformer schema
 
-  conformer.write JSON.stringify(input)+'\n', 'utf8'
+  if typeof input isnt 'string'
+    input = JSON.stringify(input) + '\n'
+
+  conformer.write input, 'utf8'
 
   chunk = conformer.read()
   result = chunk?.toString('utf8')
@@ -12,6 +15,18 @@ test = ({schema, input, output}) ->
   assert.deepEqual output, result
 
 describe 'conformer', ->
+  it 'should ignore malformed json', ->
+    test(
+      schema: [{name: 'foo', type: 'INTEGER'}]
+      input: '{foo: 1, a: "b"}\n{"foo":2}\n'
+      output: {foo: 2}
+    )
+  it 'should ignore garbage', ->
+    test(
+      schema: [{name: 'foo', type: 'INTEGER'}]
+      input: '}!@{#@#$GHR(@$#%\n{"foo":2}\n'
+      output: {foo: 2}
+    )
   describe 'remove fields transform', ->
     it 'should remove top-level fields not defined in the schema', ->
       test(

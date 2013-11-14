@@ -7,6 +7,7 @@ unless schemaFile = process.argv[2]
 schema = JSON.parse fs.readFileSync(schemaFile, 'utf8')
 
 conformer = new Conformer schema
+conformer.on "warning", (msg) -> console.warn msg
 
 process.stdin.pipe(conformer).pipe(process.stdout)
 

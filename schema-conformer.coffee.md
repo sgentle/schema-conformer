@@ -41,7 +41,11 @@ We conform by collecting data until we hit a newline.
 
 Parsing the data as JSON
 
-          obj = JSON.parse line
+          try
+            obj = JSON.parse line
+          catch err
+            @emit "warning", "Ignoring malformed JSON"
+            continue
 
 Performing a series of transforms on each field
 
