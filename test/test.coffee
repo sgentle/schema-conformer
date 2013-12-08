@@ -14,6 +14,13 @@ test = ({schema, input, output}) ->
   result = JSON.parse(result) if result
   assert.deepEqual output, result
 
+testDirect = ({schema, input, output}) ->
+  conformer = new Conformer schema
+
+  conformer.conform input
+
+  assert.deepEqual output, input
+
 describe 'conformer', ->
   it 'should ignore malformed json', ->
     test(
@@ -27,6 +34,25 @@ describe 'conformer', ->
       input: '}!@{#@#$GHR(@$#%\n{"foo":2}\n'
       output: {foo: 2}
     )
+
+  describe 'direct calls to conform()', ->
+    it 'should work the same as streaming json', ->
+      testDirect(
+        schema: [{name: 'foo', type: 'INTEGER'}]
+        input: {foo: 1, a: 'b'}
+        output: {foo: 1}
+      )
+
+    it 'should be destructive', ->
+      input = {foo: 1, a: 'b'}
+      output = {foo: 1}
+      testDirect(
+        schema: [{name: 'foo', type: 'INTEGER'}]
+        input: input
+        output: output
+      )
+      assert.deepEqual input, output
+
   describe 'remove fields transform', ->
     it 'should remove top-level fields not defined in the schema', ->
       test(

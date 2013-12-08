@@ -49,9 +49,7 @@ Parsing the data as JSON
 
 Performing a series of transforms on each field
 
-          perField @schema, obj, transform for transform in Conformer.transforms
-
-transform @schema, obj
+          @conform obj
 
 And then emitting the resulting JSON string
 
@@ -63,6 +61,10 @@ Transforms
 ----------
 
 These are the transforms we use on each field:
+
+      conform: (obj) ->
+        perField @schema, obj, transform for transform in Conformer.transforms
+        obj
 
     perField = (schema, obj, fn) ->
       for k, vs of obj
@@ -78,7 +80,7 @@ These are the transforms we use on each field:
     Conformer.transforms.push removeExtraFields
 
 2. Coerce fields to a useful type if they're not already that type
-    
+
     coerceInts = ({type, k, v, obj}) -> obj[k] = parseInt v if type.type is 'INTEGER'
     coerceFloats = ({type, k, v, obj}) -> obj[k] = parseFloat v if type.type is 'FLOAT'
     coerceBools = ({type, k, v, obj}) -> obj[k] = !!v if type.type is 'BOOLEAN' and v?
