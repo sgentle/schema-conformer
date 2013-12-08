@@ -1,2 +1,2 @@
-require('coffee-script')
-require('./schema-conformer.coffee.md')
+require('coffee-script');
+module.exports =  require('./schema-conformer.coffee.md');
